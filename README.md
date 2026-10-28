@@ -1,16 +1,19 @@
-# React + Vite
+# QuizMaster
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+QuizMaster is a React/Vite frontend with an Express API that generates quizzes using Gemini.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Install frontend dependencies with `npm ci`.
+2. Install backend dependencies with `npm --prefix backend ci`.
+3. Create `backend/.env` and set `GEMINI_API_KEY` to your Gemini API key.
+4. Start the API with `npm --prefix backend start`.
+5. In another terminal, start the frontend with `npm run dev`.
 
-## React Compiler
+The Vite development server proxies `/api` requests to the local backend on port 5000.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Deploy to Render
 
-## Expanding the Oxlint configuration
+This repository includes a Render Blueprint in `render.yaml`. In Render, create a new Blueprint from this repository and set `GEMINI_API_KEY` when prompted. Render builds the frontend and backend into one web service; Express serves the built frontend and API on the same origin.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Keep the Gemini API key in Render's environment settings. Do not put it in frontend environment variables or commit it to the repository. The `/api/health` endpoint is used for the deployment health check.

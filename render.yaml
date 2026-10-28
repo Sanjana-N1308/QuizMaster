@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: quizmaster
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm --prefix backend ci && npm run build
+    startCommand: npm --prefix backend start
+    healthCheckPath: /api/health
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false

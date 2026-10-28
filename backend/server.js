@@ -4,15 +4,18 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { GoogleGenAI } from "@google/genai";
+import { existsSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`QuizMaster backend running on port ${PORT}`);
-});
+const frontendDist = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "../dist"
+);
 
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
@@ -195,6 +198,15 @@ Requirements:
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`QuizMaster AI backend running at http://localhost:${PORT}`);
+if (existsSync(frontendDist)) {
+  app.use(express.static(frontendDist));
+  app.get("/{*path}", (req, res, next) => {
+    res.sendFile(path.join(frontendDist, "index.html"), (error) => {
+      if (error) next(error);
+    });
+  });
+}
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`QuizMaster server running on port ${PORT}`);
 });

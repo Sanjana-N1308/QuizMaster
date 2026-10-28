@@ -1,7 +1,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const QUIZ_API = "http://localhost:5000/api/generate-quiz";
+const QUIZ_API = "/api/generate-quiz";
 
 function Quiz({ topic, questionCount = 10, quizMode = "timed", onFinish, onCancel }) {
   const quizTime = quizMode === "timed" ? questionCount * 60 : null;
@@ -248,4 +248,3 @@ function Quiz({ topic, questionCount = 10, quizMode = "timed", onFinish, onCance
 }
 
 export default Quiz;
-
