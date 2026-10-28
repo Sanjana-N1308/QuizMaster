@@ -76,6 +76,12 @@ function Dashboard({ user, onStartQuiz, onProfile, onLeaderboard, onHistory, }) 
           >
             🏆 Leaderboard
           </button>
+          <button
+  className="secondary-btn"
+  onClick={onHistory}
+>
+  📚 Quiz History
+</button>
         </div>
       </div>
 
